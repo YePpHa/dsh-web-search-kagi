@@ -1,7 +1,7 @@
 {
   "name": "dsh-web-search-kagi",
   "description": "Kagi Search v1-backed search provider for the DeepSeek Harness web capability seam (ctx.web)",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/types/index.d.ts",
