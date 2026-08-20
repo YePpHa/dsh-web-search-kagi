@@ -1,7 +1,7 @@
 /**
  * Browser half of the Kagi search provider: one card in Settings → Plugins →
  * "Plugin configuration", keyed on the `web-search-kagi` settings namespace.
- * @module @deepseek-ai/dsh-web-search-kagi/client
+ * @module dsh-web-search-kagi/client
  */
 import type { Context } from '@deepseek-ai/cordis';
 

@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-web-search-kagi
+# dsh-web-search-kagi
 
 Kagi Search v1 provider for the DeepSeek Harness web capability seam (`ctx.web`).
 
@@ -21,7 +21,7 @@ Then in `$DSH_HOME/profiles/web/cordis.patch.yml`:
 ```yaml
 - insert:
     - id: web-search-kagi
-      name: '@deepseek-ai/dsh-web-search-kagi'
+      name: 'dsh-web-search-kagi'
       config:
         apiKeyEnv: KAGI_API_KEY
 

@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-web-search-kagi",
+  "name": "dsh-web-search-kagi",
   "description": "Kagi Search v1-backed search provider for the DeepSeek Harness web capability seam (ctx.web)",
   "version": "0.1.0",
   "type": "module",

@@ -2,7 +2,7 @@
  * Register a Kagi Search v1-backed provider in `ctx.web`. It POSTs to the Kagi
  * `/search` endpoint with bearer auth and maps `data.search[]` onto the seam's
  * portable citation shape.
- * @module @deepseek-ai/dsh-web-search-kagi
+ * @module dsh-web-search-kagi
  */
 import type { Context } from '@deepseek-ai/cordis';
 import z from '@deepseek-ai/schemastery';
