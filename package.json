@@ -1,7 +1,7 @@
 {
   "name": "dsh-web-search-kagi",
   "description": "Kagi Search v1-backed search provider for the DeepSeek Harness web capability seam (ctx.web)",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/types/index.d.ts",
@@ -40,7 +40,6 @@
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
     "@deepseek-ai/dsh-credentials": "^0.1.0-rc.8",
-    "@deepseek-ai/dsh-launch-environment": "^0.1.0-rc.8",
     "@deepseek-ai/dsh-settings": "^0.1.0-rc.8",
     "@deepseek-ai/dsh-web": "^0.1.0-rc.8",
     "@deepseek-ai/dsh-api-remotes": "^0.1.0-rc.8",

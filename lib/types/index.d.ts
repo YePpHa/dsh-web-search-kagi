@@ -30,9 +30,7 @@ export declare class KagiSearchProvider implements WebSearchProvider {
 
 /** Options snapshotted for one search. */
 export interface KagiSearchProviderOptions {
-  apiKey?: string;
   resolveApiKey?: () => Promise<string | undefined>;
-  apiKeyEnv?: string;
   baseURL: string;
   limit: number;
   safeSearch: boolean;
@@ -45,19 +43,15 @@ export declare const inject: string[];
 
 /** Plugin config; every field is optional and fully defaulted in `apply`. */
 export interface Config {
-  /** Literal Kagi API key; prefer {@link apiKeyEnv} so no secret enters configuration files. */
-  apiKey?: string;
-  /** Credential reference resolved for each search; defaults to `KAGI_API_KEY`. */
-  apiKeyEnv?: string;
   /** Kagi Search API v1 base URL. Defaults to `https://kagi.com/api/v1`. */
   baseURL?: string;
-  /** Fallback result limit when the tool passes no `maxResults`; 1–1024. Defaults to 10. */
+  /** Fallback result limit when the tool passes no `maxResults`; 1 to 1024. Defaults to 10. */
   limit?: number;
   /** Whether to request Kagi safe search. Defaults to `true`. */
   safeSearch?: boolean;
 }
 export declare const Config: z<Config>;
-/** Settings namespace carrying this provider's key reference and limits. */
+/** Settings namespace carrying this provider's key and limits. */
 export declare const WEB_SEARCH_KAGI_SETTINGS_NAMESPACE: SettingsNamespace;
 /** Register the Kagi search provider with `ctx.web`. */
 export declare function apply(ctx: Context, config: Config): void;
