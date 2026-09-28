@@ -1,0 +1,15 @@
+# The dsh-web-search-kagi bundle patch: the profile layer this package
+# contributes, applied in `dsh.profile.bundles` order, before the profile's own
+# cordis.patch.yml. `dsh plugin --profile <name> add dsh-web-search-kagi` adds
+# this package to that list as soon as the manifest below declares it.
+#
+# This layer owns the provider row and nothing else: choosing the provider is
+# the deployment's business, so `web.config.searchProvider: kagi` (and the
+# disable of `web-search-deepseek`) belong in the profile's patch file, where
+# they win over every bundle layer. A profile that composes this bundle must not
+# insert `web-search-kagi` again — two loader rows with one id is a boot-time
+# `duplicate loader entry id` error.
+
+- insert:
+    - id: web-search-kagi
+      name: 'dsh-web-search-kagi'

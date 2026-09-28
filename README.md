@@ -23,10 +23,6 @@ directory instead.
 Then compose it in `$DSH_HOME/profiles/web/cordis.patch.yml`:
 
 ```yaml
-- insert:
-    - id: web-search-kagi
-      name: 'dsh-web-search-kagi'
-
 - id: web
   config:
     searchProvider: kagi
@@ -36,6 +32,24 @@ Then compose it in `$DSH_HOME/profiles/web/cordis.patch.yml`:
 ```
 
 Restart the harness.
+
+## Bundle layer
+
+The package declares `dsh.bundle.patch` in `package.json` and ships
+`cordis.patch.yml` at its root: it is a dsh bundle, not just a plugin package.
+`dsh plugin --profile web add dsh-web-search-kagi` therefore also appends the
+package to `dsh.profile.bundles`, and that layer inserts the `web-search-kagi`
+provider row, so the profile patch above needs no `insert` entry of its own.
+
+Which provider the web seam serves is deployment configuration and stays in the
+profile patch above: bundle layers are applied before it, so its
+`searchProvider: kagi` wins over both the bundle row and the base layer's
+`searchProvider: deepseek-official`.
+
+Upgrading from 0.2.x: delete the `- insert:` block from the profile patch. The
+bundle contributes `web-search-kagi` now, and two loader entries sharing one id
+fail the boot with `duplicate loader entry id: web-search-kagi`. The `web` and
+`web-search-deepseek` patches stay.
 
 ## API key
 
