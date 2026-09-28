@@ -6,7 +6,6 @@
  */
 import type { Context } from '@deepseek-ai/cordis';
 import z from '@deepseek-ai/schemastery';
-import type { SettingsNamespace } from '@deepseek-ai/dsh-settings';
 import type { WebSearchProvider } from '@deepseek-ai/dsh-web';
 
 export { KAGI_DEFAULT_BASE_URL, KAGI_DEFAULT_LIMIT, KAGI_MAX_LIMIT, KAGI_PROVIDER_ID, KagiSearchProvider };
@@ -41,7 +40,7 @@ export declare const name = 'web-search-kagi';
 /** The web seam this provider registers into. */
 export declare const inject: string[];
 
-/** Plugin config; every field is optional and fully defaulted in `apply`. */
+/** Plugin config. Every field is `.volatile()`, so each is editable in the settings page. */
 export interface Config {
   /** Kagi Search API v1 base URL. Defaults to `https://kagi.com/api/v1`. */
   baseURL?: string;
@@ -49,9 +48,13 @@ export interface Config {
   limit?: number;
   /** Whether to request Kagi safe search. Defaults to `true`. */
   safeSearch?: boolean;
+  /**
+   * Write-only Kagi API key. The settings page collects it, the plugin stores it
+   * in the credentials service under `KAGI_SEARCH_API_KEY`, and the field is
+   * cleared again so it is never configuration.
+   */
+  apiKey?: string;
 }
 export declare const Config: z<Config>;
-/** Settings namespace carrying this provider's key and limits. */
-export declare const WEB_SEARCH_KAGI_SETTINGS_NAMESPACE: SettingsNamespace;
 /** Register the Kagi search provider with `ctx.web`. */
 export declare function apply(ctx: Context, config: Config): void;

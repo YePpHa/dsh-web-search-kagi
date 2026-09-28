@@ -61,37 +61,45 @@ KAGI_SEARCH_API_KEY: your-kagi-api-key
 ```
 
 You can also set it later in the web UI at Settings → Plugins → Plugin
-configuration; the card writes the same credential. Get a key from
+configuration, whose **API key** field writes the same credential. Get a key from
 [Kagi](https://kagi.com).
 
 ## Config
-
-All fields optional:
 
 | Field | Default | Notes |
 | --- | --- | --- |
 | `baseURL` | `https://kagi.com/api/v1` | Kagi Search API v1 base. |
 | `limit` | `10` | Fallback result limit, 1 to 1024. |
 | `safeSearch` | `true` | Requests Kagi `safe_search`. |
+| `apiKey` | unset | Write-only; moved into the credentials service (see below). |
+
+Every field is marked `.volatile()`, which is what makes it editable in the
+settings page without restarting the plugin.
 
 ## Settings UI
 
-Since DeepSeek Harness v0.1.0-rc.7 the plugin's settings show in the web UI at
-Settings → Plugins → Plugin configuration. The package registers the
-`web-search-kagi` settings namespace on the Host (`installSettingsSection`) and
-ships a `dsh.client` browser bundle (`lib/client.js`) that renders a card for
-it. No `cordis.patch.yml` edit is needed to change these values after install.
+The plugin's settings show in the web UI at Settings → Plugins → Plugin
+configuration. No `cordis.patch.yml` edit is needed to change these values after
+install, and the package ships **no browser bundle**: DeepSeek Harness generates
+the page from the plugin's `Config` schema.
 
-The card edits the API key, the endpoint (`baseURL`), the result limit
-(`limit`), and the safe search toggle (`safeSearch`). The key field writes the
-`KAGI_SEARCH_API_KEY` credential and never shows the stored value; leave it blank to
-keep the current key.
+Every write carries the revision it read, and overridden fields show a Reset to
+default button. The layering is schema defaults, then the composition entry
+config, then the user document, so the `config:` block in `cordis.patch.yml`
+stays the deployment's base layer.
 
-Edits are held until you press Save. Each write carries the revision it read,
-and overridden fields show a Reset to default button. The layering is unchanged:
-schema defaults, then the composition entry config, then the user document. The
-`config:` block in `cordis.patch.yml` stays the deployment's base layer.
+### The API key field
 
-`Config` in `lib/index.js` and the card's field list describe the same fields.
-The card mirrors the schema defaults for reset previews, so keep them in sync
-when you add or change a field.
+`apiKey` is a `role('secret')` field, so the settings wire redacts it. It is not
+configuration: when the form supplies a value the plugin writes it to the
+credentials service under `KAGI_SEARCH_API_KEY` and clears the field, so later
+settings writes do not restate it.
+
+Prefer `$DSH_HOME/.credentials.yaml` if you want the secret to never pass through
+a settings form. That path writes the value nowhere but the credentials store;
+the form has to accept the value before the plugin can redirect it, so a key
+typed into the page does reach the profile patch and the settings document when
+the form writes them.
+
+The provider re-resolves the credential on every operation, so a key changed in
+either place reaches the next search with no restart.
