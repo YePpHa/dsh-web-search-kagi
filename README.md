@@ -8,6 +8,16 @@ Registers a `WebSearchProvider` with id `kagi` that POSTs to Kagi's
 `https://kagi.com/api/v1/search` with bearer auth and maps `data.search[]` onto
 the seam's portable citation shape (`url`, `title`, `snippet`, `publishedAt`).
 
+## Compatibility
+
+DSH `0.2.0-rc.1` or newer within the 0.2 release line. Before a profile imports a
+plugin or bundle, DSH matches every `@deepseek-ai/dsh` and `@deepseek-ai/dsh-*`
+range in its `peerDependencies` against the running DSH version itself, so those
+peers are declared as a range (`>=0.2.0-rc.1 <0.3.0-0`) and not as an exact
+version. An exact pin makes the package unloadable on the next DSH release: 0.3.1
+pinned `0.2.0-rc.1` and DSH 0.2.0-rc.2 refused it, even though `dsh-web`,
+`dsh-credentials`, and `dsh-settings` are byte-identical in both releases.
+
 ## Install
 
 Add the package to the profile that runs the web app:
